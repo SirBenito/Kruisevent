@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wit-Gele Kruis Event Scanner</title>
+
+    <!-- Apple PWA Config -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WGK Scanner">
+    <!-- Het logo als icoon -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMDAuMSAxMDAuMSI+PHBhdGggaWQ9InN5bWJvbF9sb2dvIiBmaWxsPSIjZmZjMzAwIiBkPSJNMTAwLjEsMzYuNXYyNy4xYzAsMS43LTEuNCwzLjEtMy4xLDMuMWgtMjcuMWMtMS43LDAtMy4xLDEuNC0zLjEsMy4xdjI3LjFjMCwxLjctMS40LDMuMS0zLjEsMy4xaC0yNy4xYy0xLjcsMC0zLjEtMS40LTMuMS0zLjF2LTE2LjVjMC0yNiwyMS4xLTQ3LjEsNDcuMS00Ny4xaDE2LjZjMS43LDAsMy4xLDEuNCwzLjEsMy4xWk01LjksNjYuN2MyMi41LDAsMzEtMzQuMyw2MC44LTM2LjhWMy4xYzAtMS43LTEuNC0zLjEtMy4xLTMuMWgtMjcuMWMtMS43LDAtMy4xLDEuNC0zLjEsMy4xdjI3LjFjMCwxLjctMS40LDMuMS0zLjEsMy4xaC0yNy4xYy0xLjcsMC0zLjEtMS40LTMuMS0zLjF2MjcuMWMwLDEuNywxLjQsMy4xLDMuMSwzLjFoMi44WiIvPjwvc3ZnPg==">
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,7 +18,6 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- HTML5 QR Code library voor de camera -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
         tailwind.config = {
@@ -33,7 +39,6 @@
     </script>
 
     <style>
-        /* Apple 2026 Glassmorphism & Blobs (Gelijk aan de Generator) */
         body {
             margin: 0;
             background-color: #f4f7fb;
@@ -80,7 +85,6 @@
             border-radius: 24px; 
         }
 
-        /* Blobs */
         .blob {
             position: absolute;
             filter: blur(60px);
@@ -94,7 +98,6 @@
             100% { transform: translate(30px, -50px) scale(1.1); }
         }
 
-        /* Geanimeerde scan laser */
         .scan-laser {
             animation: laserMove 2.5s infinite ease-in-out;
         }
@@ -108,14 +111,11 @@
 </head>
 <body class="text-gray-800 antialiased relative overflow-x-hidden flex flex-col min-h-screen">
 
-    <!-- Achtergrond Elementen -->
     <div class="blob bg-wgk-yellow w-96 h-96 rounded-full top-10 left-10" style="animation-delay: -2s;"></div>
     <div class="blob bg-blue-300 w-96 h-96 rounded-full bottom-10 right-10" style="animation-duration: 12s;"></div>
 
-    <!-- Header (Met officiële WGK Logo in Geel) -->
     <header class="glass-panel border-b border-white/60 sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <!-- Officiële WGK logo in geel #ffc300 -->
             <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100.1 100.1" class="w-9 h-9 transform rotate-3">
                 <path id="symbol_logo" fill="#ffc300" d="M100.1,36.5v27.1c0,1.7-1.4,3.1-3.1,3.1h-27.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7-1.4,3.1-3.1,3.1h-27.1c-1.7,0-3.1-1.4-3.1-3.1v-16.5c0-26,21.1-47.1,47.1-47.1h16.6c1.7,0,3.1,1.4,3.1,3.1ZM5.9,66.7c22.5,0,31-34.3,60.8-36.8V3.1c0-1.7-1.4-3.1-3.1-3.1h-27.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7-1.4,3.1-3.1,3.1H3.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7,1.4,3.1,3.1,3.1h2.8Z"/>
             </svg>
@@ -129,7 +129,6 @@
         </button>
     </header>
 
-    <!-- SCHERM 1: Configuratie (Handmatig aanpasbaar indien nodig) -->
     <main id="configScreen" class="flex-grow flex flex-col justify-center p-6 hidden z-10">
         <div class="glass-panel text-gray-800 p-8 rounded-[2.5rem] max-w-md w-full mx-auto">
             <div class="flex justify-between items-center mb-5">
@@ -141,7 +140,7 @@
                 </button>
             </div>
             <p class="text-xs text-gray-500 mb-6 leading-relaxed font-medium">
-                De verbinding met Google Sheets is automatisch ingesteld. Je kunt deze URL overschrijven als je een geheel nieuwe spreadsheet koppelt.
+                De verbinding met Google Sheets is automatisch ingesteld.
             </p>
             <div class="mb-6">
                 <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Google Apps Script URL</label>
@@ -161,10 +160,8 @@
         </div>
     </main>
 
-    <!-- SCHERM 2: Event Selectie (Dit opent nu direct bij start!) -->
     <main id="eventScreen" class="flex-grow flex flex-col justify-center p-6 z-10">
         <div class="glass-panel text-gray-800 p-8 rounded-[2.5rem] max-w-md w-full mx-auto text-center border-white/80">
-            <!-- Grote WGK logo badge -->
             <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-wgk-blue/5 border border-white/60 transform rotate-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100.1 100.1" class="w-11 h-11">
                     <path fill="#ffc300" d="M100.1,36.5v27.1c0,1.7-1.4,3.1-3.1,3.1h-27.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7-1.4,3.1-3.1,3.1h-27.1c-1.7,0-3.1-1.4-3.1-3.1v-16.5c0-26,21.1-47.1,47.1-47.1h16.6c1.7,0,3.1,1.4,3.1,3.1ZM5.9,66.7c22.5,0,31-34.3,60.8-36.8V3.1c0-1.7-1.4-3.1-3.1-3.1h-27.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7-1.4,3.1-3.1,3.1H3.1c-1.7,0-3.1,1.4-3.1,3.1v27.1c0,1.7,1.4,3.1,3.1,3.1h2.8Z"/>
@@ -174,13 +171,11 @@
             <h2 class="text-2xl font-extrabold text-wgk-blue tracking-tight mb-2">Welkom bij de Scanner</h2>
             <p class="text-sm text-gray-500 font-medium mb-8">Kies hieronder het gewenste event om de registraties lokaal te synchroniseren.</p>
             
-            <!-- Laad indicator -->
             <div id="loadingEvents" class="text-wgk-blue/80 font-bold py-4 px-4 bg-white/40 border border-white/60 rounded-2xl mb-4 animate-pulse flex items-center justify-center gap-3">
                 <i class="fa-solid fa-spinner fa-spin text-wgk-yellow text-lg"></i> 
-                <span class="text-sm">Events ophalen uit Google Sheets...</span>
+                <span class="text-sm">Events ophalen...</span>
             </div>
             
-            <!-- Selector Dropdown -->
             <div class="relative w-full mb-4 hidden" id="selectorContainer">
                 <select id="eventSelector" class="w-full glass-input rounded-2xl p-4 text-base font-bold text-wgk-blue outline-none cursor-pointer pr-12">
                     <option value="">Kies vandaag een event...</option>
@@ -188,7 +183,6 @@
                 <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-wgk-blue opacity-50 pointer-events-none"></i>
             </div>
             
-            <!-- Start button -->
             <button id="btnLoadEvent" onclick="loadEventData()" class="w-full bg-wgk-blue text-white font-bold py-4 px-6 rounded-2xl hover:bg-wgk-blue/90 hover:shadow-xl transition transform hover:-translate-y-0.5 shadow-lg shadow-wgk-blue/10 hidden flex items-center justify-center gap-2">
                 <span>Scanner activeren</span>
                 <i class="fa-solid fa-circle-arrow-right"></i>
@@ -196,10 +190,8 @@
         </div>
     </main>
 
-    <!-- SCHERM 3: De Scanner -->
     <main id="scannerScreen" class="flex-grow flex flex-col hidden relative z-10 px-4 pb-6">
         <div class="w-full max-w-md mx-auto flex flex-col flex-grow">
-            <!-- Live status bar -->
             <div class="p-4 glass-panel rounded-2xl border border-white/60 flex justify-between items-center mb-4">
                 <div class="flex items-center gap-3">
                     <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
@@ -214,22 +206,16 @@
                 </div>
             </div>
             
-            <!-- Camera container met hoeken en laser -->
             <div class="flex-grow flex flex-col justify-center items-center relative mb-4">
                 <div class="relative w-full aspect-square overflow-hidden rounded-3xl bg-slate-950 shadow-2xl border border-white/20">
                     <div id="reader" class="w-full h-full"></div>
-                    
-                    <!-- Geanimeerde Laser -->
                     <div class="absolute left-[8%] right-[8%] h-[3px] bg-gradient-to-r from-transparent via-wgk-yellow to-transparent scan-laser z-20 shadow-lg shadow-wgk-yellow/60"></div>
-                    
-                    <!-- Camera Corner Guide Overlay -->
                     <div class="absolute top-6 left-6 w-8 h-8 border-t-4 border-l-4 border-wgk-yellow rounded-tl-lg z-20 pointer-events-none"></div>
                     <div class="absolute top-6 right-6 w-8 h-8 border-t-4 border-r-4 border-wgk-yellow rounded-tr-lg z-20 pointer-events-none"></div>
                     <div class="absolute bottom-6 left-6 w-8 h-8 border-b-4 border-l-4 border-wgk-yellow rounded-bl-lg z-20 pointer-events-none"></div>
                     <div class="absolute bottom-6 right-6 w-8 h-8 border-b-4 border-r-4 border-wgk-yellow rounded-br-lg z-20 pointer-events-none"></div>
                 </div>
                 
-                <!-- Resultaat Overlay (Popup na scan) -->
                 <div id="scanResult" class="absolute inset-4 z-30 rounded-[2rem] shadow-2xl flex flex-col justify-center items-center text-center p-8 hidden transform scale-95 transition-all duration-300">
                     <div class="w-20 h-20 rounded-full bg-white/25 flex items-center justify-center mb-4 backdrop-blur-md border border-white/20">
                         <i id="resultIcon" class="text-4xl"></i>
@@ -242,7 +228,6 @@
                 </div>
             </div>
             
-            <!-- Controls footer -->
             <div class="text-center">
                 <button onclick="stopScanningAndSwitch()" class="w-full bg-white/60 hover:bg-white text-wgk-blue font-bold py-4 px-6 rounded-2xl transition flex items-center justify-center gap-2 border border-gray-200 shadow-sm hover:shadow-md">
                     <i class="fa-solid fa-circle-arrow-left"></i>
@@ -252,58 +237,34 @@
         </div>
     </main>
 
-    <!-- Onderschrift/Credits -->
     <footer class="p-6 text-center text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-auto z-10">
         Wit-Gele Kruis &copy; 2026 • In-house QR-Scanner Suite
     </footer>
 
     <script>
-        // Standaard Google Apps Script URL gekoppeld aan je spreadsheet!
         const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbxWv0qPVHIU3JRUiPd6SMU_XXL-ZCfTltZCFG6AuEIoAgeFIDoVKalV15n9CHTU9XY/exec';
         let GAS_URL = localStorage.getItem('gasUrl') || DEFAULT_GAS_URL;
-        
         let currentEvent = '';
         let attendeesList = {};
         let html5QrcodeScanner = null;
         let isScanning = false;
         let scanCooldown = false;
 
-        // UI Schermbeheer
         function showScreen(screenId) {
             document.getElementById('configScreen').classList.add('hidden');
             document.getElementById('eventScreen').classList.add('hidden');
             document.getElementById('scannerScreen').classList.add('hidden');
-            
-            const screen = document.getElementById(screenId);
-            screen.classList.remove('hidden');
-            
-            if (screenId === 'configScreen') {
-                document.getElementById('apiUrl').value = GAS_URL;
-            }
+            document.getElementById(screenId).classList.remove('hidden');
+            if (screenId === 'configScreen') document.getElementById('apiUrl').value = GAS_URL;
         }
 
-        function closeConfig() {
-            if (currentEvent) {
-                showScreen('scannerScreen');
-            } else {
-                showScreen('eventScreen');
-            }
-        }
-
-        // --- INITIALISATIE ---
-        window.onload = () => {
-            fetchEvents();
-        };
+        function closeConfig() { currentEvent ? showScreen('scannerScreen') : showScreen('eventScreen'); }
+        window.onload = () => { fetchEvents(); };
 
         function saveConfig() {
             const url = document.getElementById('apiUrl').value.trim();
-            if (url) {
-                localStorage.setItem('gasUrl', url);
-                GAS_URL = url;
-                fetchEvents();
-            } else {
-                resetConfig();
-            }
+            if (url) { localStorage.setItem('gasUrl', url); GAS_URL = url; fetchEvents(); }
+            else resetConfig();
         }
 
         function resetConfig() {
@@ -313,20 +274,16 @@
             fetchEvents();
         }
 
-        // --- STAP 1: EVENTS OPHALEN ---
         async function fetchEvents() {
             showScreen('eventScreen');
             document.getElementById('loadingEvents').classList.remove('hidden');
             document.getElementById('selectorContainer').classList.add('hidden');
             document.getElementById('btnLoadEvent').classList.add('hidden');
-
             try {
                 const response = await fetch(`${GAS_URL}?action=getEvents`, { redirect: "follow" });
                 const events = await response.json();
-                
                 const selector = document.getElementById('eventSelector');
                 selector.innerHTML = '<option value="">Kies vandaag een event...</option>';
-                
                 if(Array.isArray(events)) {
                     events.forEach(event => {
                         const opt = document.createElement('option');
@@ -334,81 +291,45 @@
                         opt.textContent = event;
                         selector.appendChild(opt);
                     });
-
                     document.getElementById('loadingEvents').classList.add('hidden');
                     document.getElementById('selectorContainer').classList.remove('hidden');
                     document.getElementById('btnLoadEvent').classList.remove('hidden');
-                } else {
-                    throw new Error("Ongeldige JSON data");
                 }
             } catch (error) {
-                console.error(error);
-                alert("Er kon geen verbinding gemaakt worden met Google Sheets. Controleer je instellingen of de API.");
-                showScreen('configScreen');
+                alert("Fout bij verbinding: " + error.message);
             }
         }
 
-        // --- STAP 2: DEELNEMERS SYNCHRONISEREN ---
         async function loadEventData() {
             const selector = document.getElementById('eventSelector');
             currentEvent = selector.value;
             if (!currentEvent) return;
-
             const btn = document.getElementById('btnLoadEvent');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Bezig met inladen...';
             btn.disabled = true;
-
             try {
                 const response = await fetch(`${GAS_URL}?action=getAttendees&event=${encodeURIComponent(currentEvent)}`, { redirect: "follow" });
                 attendeesList = await response.json();
-                
-                if (attendeesList.error) {
-                    throw new Error(attendeesList.error);
-                }
-
                 document.getElementById('activeEventName').textContent = currentEvent;
                 updateCounter();
                 startScanner();
             } catch (error) {
-                alert("Fout bij het ophalen van de lijst: " + error.message);
-            } finally {
-                btn.innerHTML = '<span>Scanner activeren</span><i class="fa-solid fa-circle-arrow-right"></i>';
-                btn.disabled = false;
-            }
+                alert("Fout bij laden lijst: " + error.message);
+            } finally { btn.disabled = false; }
         }
 
-        // --- STAP 3: CAMERA & SCANNING ---
         function startScanner() {
             showScreen('scannerScreen');
             if (html5QrcodeScanner) return;
-
             html5QrcodeScanner = new Html5Qrcode("reader");
-            const config = { 
-                fps: 15, 
-                qrbox: function(width, height) {
-                    const size = Math.min(width, height) * 0.65;
-                    return { width: size, height: size };
-                }, 
-                aspectRatio: 1.0 
-            };
-            
-            html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess)
-            .catch(err => {
-                alert("Camera weigert toegang of is bezet: " + err);
-                stopScanningAndSwitch();
-            });
-            isScanning = true;
+            html5QrcodeScanner.start({ facingMode: "environment" }, { fps: 15, qrbox: 250 }, onScanSuccess);
         }
 
         function onScanSuccess(decodedText) {
             if (scanCooldown) return;
             scanCooldown = true;
-            
-            const id = decodedText.trim();
-            handleScanResult(id);
+            handleScanResult(decodedText.trim());
         }
 
-        // --- STAP 4: SCAN RESULTATEN EN ANTIMATIE ---
         function handleScanResult(id) {
             const person = attendeesList[id];
             const overlay = document.getElementById('scanResult');
@@ -417,61 +338,38 @@
             const text = document.getElementById('resultText');
             const sub = document.getElementById('resultSub');
 
-            // Reset animatie en verborgen status
             overlay.classList.add('hidden', 'scale-95');
             overlay.classList.remove('bg-emerald-600', 'bg-rose-600', 'bg-sky-600');
 
             if (!person) {
-                // Rood: Geen toegang
                 overlay.classList.add('bg-rose-600');
                 icon.className = 'fa-solid fa-user-slash text-white';
                 title.textContent = "Geen toegang";
                 text.textContent = `ID: ${id}`;
                 sub.textContent = "Niet geregistreerd op de gastenlijst.";
-                playAudioTone('error');
             } else if (person.present) {
-                // Blauw: Al ingecheckt
                 overlay.classList.add('bg-sky-600');
                 icon.className = 'fa-solid fa-clock text-white';
                 title.textContent = "Reeds binnen";
                 text.textContent = person.name;
                 sub.textContent = `ID: ${id} • Al aangemeld`;
-                playAudioTone('warning');
             } else {
-                // Groen: Succesvolle Check-in
                 overlay.classList.add('bg-emerald-600');
                 icon.className = 'fa-solid fa-circle-check text-white';
                 title.textContent = "Welkom!";
                 text.textContent = person.name;
                 sub.textContent = `ID: ${id} • Toegelaten`;
-                
-                // Lokaal direct updaten, async naar Google Sheets
                 person.present = true;
                 updateCounter();
                 updateSheetAsync(id);
-                playAudioTone('success');
             }
-
-            // Pop-up animatie triggeren
             overlay.classList.remove('hidden');
-            setTimeout(() => {
-                overlay.classList.remove('scale-95');
-            }, 50);
-
-            // Automatisch weghalen en scanner ontgrendelen
-            setTimeout(() => {
-                overlay.classList.add('scale-95');
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                    scanCooldown = false;
-                }, 150);
-            }, 2400);
+            setTimeout(() => overlay.classList.remove('scale-95'), 50);
+            setTimeout(() => { overlay.classList.add('hidden'); scanCooldown = false; }, 2400);
         }
 
-        // Asynchrone check-in call op de achtergrond
         function updateSheetAsync(id) {
-            fetch(`${GAS_URL}?action=checkIn&event=${encodeURIComponent(currentEvent)}&id=${encodeURIComponent(id)}`, { redirect: "follow" })
-            .catch(err => console.error("Fout bij synchronisatie met Google Sheets: ", err));
+            fetch(`${GAS_URL}?action=checkIn&event=${encodeURIComponent(currentEvent)}&id=${encodeURIComponent(id)}`, { redirect: "follow" });
         }
 
         function updateCounter() {
@@ -482,51 +380,8 @@
 
         function stopScanningAndSwitch() {
             if (html5QrcodeScanner) {
-                html5QrcodeScanner.stop().then(() => {
-                    html5QrcodeScanner = null;
-                    isScanning = false;
-                    fetchEvents();
-                }).catch(() => {
-                    html5QrcodeScanner = null;
-                    isScanning = false;
-                    fetchEvents();
-                });
-            } else {
-                fetchEvents();
-            }
-        }
-
-        // Harmonische geluidstonen bij inchecken
-        function playAudioTone(type) {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gainNode = ctx.createGain();
-                
-                osc.connect(gainNode);
-                gainNode.connect(ctx.destination);
-                
-                if(type === 'success') { 
-                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
-                    osc.type = 'sine'; 
-                } else if(type === 'error') { 
-                    osc.frequency.setValueAtTime(150, ctx.currentTime); 
-                    osc.type = 'sawtooth'; 
-                } else if(type === 'warning') { 
-                    osc.frequency.setValueAtTime(330, ctx.currentTime); 
-                    osc.type = 'triangle'; 
-                }
-                
-                osc.start();
-                gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
-                setTimeout(() => {
-                    try { osc.stop(); } catch(e) {}
-                }, 280);
-            } catch (e) {
-                console.warn("Audio afspelen mislukt: ", e);
-            }
+                html5QrcodeScanner.stop().then(() => { html5QrcodeScanner = null; fetchEvents(); });
+            } else fetchEvents();
         }
     </script>
 </body>
